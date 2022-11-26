@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { createContext, useEffect, useState } from 'react';
 import { DataT } from './contentType';
+import { DataMock } from './DataMock';
 import { Dir } from './DirComponent';
 import { File } from './FileComponent';
 
