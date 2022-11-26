@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Dispatch, SetStateAction, useContext } from 'react';
-import { DataType } from './contentType';
+import { useContext } from 'react';
 import { DataContext, DataContextWrapper } from './DataContext';
 import { Dir } from './DirComponent';
 import { File } from './FileComponent';
