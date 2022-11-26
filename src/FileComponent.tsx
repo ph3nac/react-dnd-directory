@@ -5,7 +5,12 @@ import { FC } from 'react';
 import { FileT } from './contentType';
 import { liStyle } from './style';
 
-export const File: FC<FileT> = ({ id, text, type }) => (
+type FileProps = {
+  id: number;
+  text: string;
+  moveContent: unknown;
+};
+export const File: FC<FileProps> = ({ id, text, moveContent }) => (
   <li css={liStyle} key={`${id}-file`}>
     {text}
   </li>
