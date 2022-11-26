@@ -1,9 +1,8 @@
-import { BookmarkBarMock } from './components/BookmarkBar/BookmarkBarMock';
-import BookmarkBar from './components/BookmarkBar/BookmarkBar';
+import { Dir } from './dir';
 
 const App = () => (
   <div className="App">
-    <BookmarkBar {...BookmarkBarMock} />
+    <Dir {...Data} />
   </div>
 );
 export default App;
