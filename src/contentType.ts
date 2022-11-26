@@ -12,3 +12,8 @@ export type DirT = {
 };
 
 export type ContentT = FileT | DirT;
+
+export type DataT = {
+  id: number;
+  contents: ContentT[] | [];
+};
