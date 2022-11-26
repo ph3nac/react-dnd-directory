@@ -1,17 +1,10 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
 /** @jsxImportSource @emotion/react */
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { DataType } from './contentType';
 import { DataContext, DataContextWrapper } from './DataContext';
-import { DataMock } from './DataMock';
 import { Dir } from './DirComponent';
 import { File } from './FileComponent';
 import { moveContent } from './util';
-
-type DataContextType = [
-  data: DataType | undefined,
-  setData: Dispatch<SetStateAction<DataType | undefined>>,
-];
 
 const App = () => {
   const [data, setData] = useContext(DataContext);
@@ -32,16 +25,13 @@ const App = () => {
                   />
                 );
               }
-              if (content.type === 'dir') {
-                return (
-                  <Dir
-                    id={content.id}
-                    text={content.text}
-                    moveContent={moveContent}
-                  />
-                );
-              }
-              return <div />;
+              return (
+                <Dir
+                  id={content.id}
+                  text={content.text}
+                  moveContent={moveContent}
+                />
+              );
             }
             return <div />;
           })

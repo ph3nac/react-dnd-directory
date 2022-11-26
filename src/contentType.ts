@@ -1,23 +1,3 @@
-// export type FileT = {
-//   id: string;
-//   text: string;
-//   type: 'file';
-// };
-
-// export type DirT = {
-//   id: string;
-//   text: string;
-//   type: 'dir';
-//   contents: ContentT[];
-// };
-
-// export type ContentT = FileT | DirT;
-
-// export type DataT = {
-//   id: string;
-//   contents: ContentT[] | [];
-// };
-
 export type FileType = {
   id: string;
   type: 'file';

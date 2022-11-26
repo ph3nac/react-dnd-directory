@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable import/prefer-default-export */
 /** @jsxImportSource @emotion/react */
 import { FC } from 'react';
 import { liStyle } from './style';
