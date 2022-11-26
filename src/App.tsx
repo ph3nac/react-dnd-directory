@@ -1,33 +1,55 @@
-/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/jsx-no-constructed-context-values */
-import { createContext, useEffect, useState } from 'react';
-import { DataT } from './contentType';
+/** @jsxImportSource @emotion/react */
+import { Dispatch, SetStateAction, useContext } from 'react';
+import { DataType } from './contentType';
+import { DataContext, DataContextWrapper } from './DataContext';
 import { DataMock } from './DataMock';
 import { Dir } from './DirComponent';
 import { File } from './FileComponent';
+import { moveContent } from './util';
 
-export const DataContext = createContext({});
+type DataContextType = [
+  data: DataType | undefined,
+  setData: Dispatch<SetStateAction<DataType | undefined>>,
+];
 
 const App = () => {
-  const [data, setData] = useState<DataT>({ id: 1, contents: [] });
-  useEffect(() => {
-    setData(DataMock);
-  }, []);
+  const [data, setData] = useContext(DataContext);
 
   return (
-    <DataContext.Provider value={{ data, setData }}>
+    <DataContextWrapper>
       <div className="App">
-        {data.contents.map((content) => {
-          if (content.type === 'file') {
-            return <File {...content} />;
-          }
-          if (content.type === 'dir') {
-            return <Dir {...content} />;
-          }
-          return <div />;
-        })}
+        {data ? (
+          Object.keys(data).map((key) => {
+            const content = data[key];
+            if (content.parentId === undefined) {
+              if (content.type === 'file') {
+                return (
+                  <File
+                    id={content.id}
+                    text={content.text}
+                    moveContent={moveContent}
+                  />
+                );
+              }
+              if (content.type === 'dir') {
+                return (
+                  <Dir
+                    id={content.id}
+                    text={content.text}
+                    moveContent={moveContent}
+                  />
+                );
+              }
+              return <div />;
+            }
+            return <div />;
+          })
+        ) : (
+          <div />
+        )}
       </div>
-    </DataContext.Provider>
+    </DataContextWrapper>
   );
 };
 export default App;

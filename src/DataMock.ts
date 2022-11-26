@@ -1,30 +1,34 @@
-import { DataT } from './contentType';
+import cuid from 'cuid';
+import { DataType } from './contentType';
 
-export const DataMock: DataT = {
-  id: 1,
-  contents: [
-    {
-      type: 'file',
-      id: 1,
-      text: 'file1',
-    },
-    {
-      type: 'dir',
-      id: 2,
-      text: 'dir1',
-      contents: [
-        {
-          type: 'file',
-          id: 3,
-          text: 'file2',
-        },
-        {
-          type: 'dir',
-          id: 4,
-          text: 'dir2',
-          contents: [],
-        },
-      ],
-    },
-  ],
+const file1Id = cuid();
+const file2Id = cuid();
+const dir1Id = cuid();
+const dir2Id = cuid();
+
+export const DataMock: DataType = {
+  [file1Id]: {
+    id: file1Id,
+    type: 'file',
+    parentId: undefined,
+    text: 'file1',
+  },
+  [dir1Id]: {
+    id: dir1Id,
+    type: 'dir',
+    parentId: undefined,
+    text: 'dir1',
+  },
+  [file2Id]: {
+    id: file2Id,
+    type: 'file',
+    parentId: dir1Id,
+    text: 'file2',
+  },
+  [dir2Id]: {
+    id: dir2Id,
+    type: 'dir',
+    parentId: dir1Id,
+    text: 'dir2',
+  },
 };

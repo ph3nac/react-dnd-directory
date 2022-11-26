@@ -2,16 +2,15 @@
 /* eslint-disable import/prefer-default-export */
 /** @jsxImportSource @emotion/react */
 import { FC } from 'react';
-import { FileT } from './contentType';
 import { liStyle } from './style';
 
 type FileProps = {
-  id: number;
+  id: string;
   text: string;
   moveContent: unknown;
 };
 export const File: FC<FileProps> = ({ id, text, moveContent }) => (
-  <li css={liStyle} key={`${id}-file`}>
+  <li css={liStyle} key={id}>
     {text}
   </li>
 );
