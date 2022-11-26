@@ -4,7 +4,7 @@
 import { FC } from 'react';
 import { DirT } from './contentType';
 import { liStyle, ulStyle } from './style';
-import { File } from './file';
+import { File } from './FileComponent';
 
 export const Dir: FC<DirT> = ({ id, text, type, contents }) => (
   <li css={liStyle} key={`${id}-folder`}>
