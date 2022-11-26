@@ -57,6 +57,7 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     '@typescript-eslint/no-unused-vars': 1,
     'import/prefer-default-export': 1,
+    'import/prefer-default-export': 0,
     'import/no-extraneous-dependencies': [
       'error',
       {
