@@ -11,7 +11,7 @@ export type DirType = {
   parentId: string | undefined;
   text: string;
 };
-type ContentType = FileType | DirType;
+export type ContentType = FileType | DirType;
 
 export type DataType = {
   [id: string]: ContentType;

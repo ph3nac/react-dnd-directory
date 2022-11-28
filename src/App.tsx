@@ -1,44 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { useContext } from 'react';
-import { DataContext, DataContextWrapper } from './DataContext';
-import { Dir } from './DirComponent';
-import { File } from './FileComponent';
-import { moveContent } from './util';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Page } from './component/Page/PageComponent';
+import { DataContextWrapper } from './DataContext';
 
-const App = () => {
-  const [data, setData] = useContext(DataContext);
-
-  return (
-    <DataContextWrapper>
+const App = () => (
+  <DataContextWrapper>
+    <DndProvider backend={HTML5Backend}>
       <div className="App">
-        {data ? (
-          Object.keys(data).map((key) => {
-            const content = data[key];
-            if (content.parentId === undefined) {
-              if (content.type === 'file') {
-                return (
-                  <File
-                    id={content.id}
-                    text={content.text}
-                    moveContent={moveContent}
-                  />
-                );
-              }
-              return (
-                <Dir
-                  id={content.id}
-                  text={content.text}
-                  moveContent={moveContent}
-                />
-              );
-            }
-            return <div />;
-          })
-        ) : (
-          <div />
-        )}
+        <Page />
       </div>
-    </DataContextWrapper>
-  );
-};
+    </DndProvider>
+  </DataContextWrapper>
+);
 export default App;

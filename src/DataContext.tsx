@@ -12,8 +12,8 @@ import { DataType } from './contentType';
 import { DataMock } from './DataMock';
 
 type DataContextType = [
-  data: DataType | undefined,
-  setData: Dispatch<SetStateAction<DataType | undefined>>,
+  data: DataType,
+  setData: Dispatch<SetStateAction<DataType>>,
 ];
 
 type WrapperProps = {
@@ -23,10 +23,15 @@ type WrapperProps = {
 export const DataContext = createContext<DataContextType>([{}, () => {}]);
 
 export const DataContextWrapper: FC<WrapperProps> = ({ children }) => {
-  const [data, setData] = useState<DataType>();
+  const [data, setData] = useState<DataType>({});
+
   useEffect(() => {
     setData(DataMock);
   }, []);
+
+  // useEffect(() => {
+  //   console.error(data);
+  // }, [data]);
 
   const DataContextValue = useMemo<DataContextType>(
     () => [data, setData],

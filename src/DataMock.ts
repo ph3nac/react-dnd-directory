@@ -1,10 +1,10 @@
 import cuid from 'cuid';
 import { DataType } from './contentType';
 
-const file1Id = cuid();
-const file2Id = cuid();
-const dir1Id = cuid();
-const dir2Id = cuid();
+export const file1Id = cuid();
+export const file2Id = cuid();
+export const dir1Id = cuid();
+export const dir2Id = cuid();
 
 export const DataMock: DataType = {
   [file1Id]: {
