@@ -29,9 +29,9 @@ export const DataContextWrapper: FC<WrapperProps> = ({ children }) => {
     setData(DataMock);
   }, []);
 
-  // useEffect(() => {
-  //   console.error(data);
-  // }, [data]);
+  useEffect(() => {
+    console.error(data);
+  }, [data]);
 
   const DataContextValue = useMemo<DataContextType>(
     () => [data, setData],
