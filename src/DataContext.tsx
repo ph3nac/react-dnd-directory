@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { DataType } from './contentType';
+import { DataType } from './@types/contentType';
 import { DataMock } from './DataMock';
 
 type DataContextType = [

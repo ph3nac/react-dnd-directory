@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { DataContext } from '@/DataContext';
-import { moveContent } from '@/util';
-import cuid from 'cuid';
 import { useContext, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { Dir } from '../Dir/DirComponent';
@@ -33,7 +31,6 @@ export const Page = () => {
       />
       <ul
         css={css`
-          background: green;
           border: 0;
           padding: 0;
           margin: 0;
@@ -49,17 +46,11 @@ export const Page = () => {
                       key={content.id}
                       id={content.id}
                       text={content.text}
-                      moveContent={moveContent}
                     />
                   );
                 }
                 return (
-                  <Dir
-                    key={content.id}
-                    id={content.id}
-                    text={content.text}
-                    moveContent={moveContent}
-                  />
+                  <Dir key={content.id} id={content.id} text={content.text} />
                 );
               }
               return null;

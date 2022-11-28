@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /** @jsxImportSource @emotion/react */
 import { DataContext } from '@/DataContext';
-import { isAncestor } from '@/util';
+import { isAncestor, orderedData } from '@/util';
 import { FC, useContext, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { liStyle } from '../../style';
@@ -9,9 +9,8 @@ import { liStyle } from '../../style';
 type FileProps = {
   id: string;
   text: string;
-  moveContent: unknown;
 };
-export const File: FC<FileProps> = ({ id, text, moveContent }) => {
+export const File: FC<FileProps> = ({ id, text }) => {
   const [data, setData] = useContext(DataContext);
   const ref = useRef(null);
 
@@ -20,10 +19,11 @@ export const File: FC<FileProps> = ({ id, text, moveContent }) => {
     drop: (item) => {
       const draggingId = item.id;
       const droppingId = id;
-      if (draggingId === droppingId) return;
       if (isAncestor(draggingId, droppingId, data)) return;
-      data[draggingId].parentId = data[droppingId].parentId;
-      setData({ ...data });
+      if (draggingId === droppingId) return;
+      const orderData = orderedData(data, droppingId, draggingId);
+      setData({ ...orderData });
+      // setData({ ...data });
       console.log(`dropped into file id:${id}`);
     },
   });

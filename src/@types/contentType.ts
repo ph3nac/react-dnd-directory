@@ -3,6 +3,7 @@ export type FileType = {
   type: 'file';
   parentId: string | undefined;
   text: string;
+  index: number;
 };
 
 export type DirType = {
@@ -10,6 +11,7 @@ export type DirType = {
   type: 'dir';
   parentId: string | undefined;
   text: string;
+  index: number;
 };
 export type ContentType = FileType | DirType;
 

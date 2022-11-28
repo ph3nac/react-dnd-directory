@@ -1,20 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { FC, useContext, useRef } from 'react';
-import cuid from 'cuid';
 import { useDrag, useDrop } from 'react-dnd';
 import { css } from '@emotion/react';
 import { isAncestor } from '@/util';
 import { liStyle, ulStyle } from '../../style';
 import { DataContext } from '../../DataContext';
 import { File } from '../File/FileComponent';
+import { DirContents } from './DirContents';
 
 type DirProps = {
   id: string;
   text: string;
-  moveContent: unknown;
 };
 
-export const Dir: FC<DirProps> = ({ id, text, moveContent }) => {
+export const Dir: FC<DirProps> = ({ id, text }) => {
   const ref = useRef(null);
   const [data, setData] = useContext(DataContext);
   const [, drop] = useDrop<{ id: string }, unknown, unknown>({
@@ -25,6 +24,7 @@ export const Dir: FC<DirProps> = ({ id, text, moveContent }) => {
       if (draggingId === droppingId) return;
       if (isAncestor(draggingId, droppingId, data)) return;
       data[draggingId].parentId = droppingId;
+      // TODO: Sort by index
       setData({ ...data });
       console.log(`dropped into dir id:${id}`);
     },
@@ -34,6 +34,8 @@ export const Dir: FC<DirProps> = ({ id, text, moveContent }) => {
     item: { id: id },
   });
   drag(drop(ref));
+
+  const orderedDirContents = DirContents(data, id);
   return (
     <div>
       <div
@@ -47,29 +49,13 @@ export const Dir: FC<DirProps> = ({ id, text, moveContent }) => {
       </div>
       <li css={liStyle} key={id}>
         <ul css={ulStyle}>
-          {Object.keys(data).map((key) => {
-            const content = data[key];
-            if (content.parentId === id) {
-              if (content.type === 'file') {
-                return (
-                  <File
-                    key={content.id}
-                    id={content.id}
-                    text={content.text}
-                    moveContent={moveContent}
-                  />
-                );
-              }
+          {orderedDirContents.map((content) => {
+            if (content.type === 'file') {
               return (
-                <Dir
-                  key={content.id}
-                  id={content.id}
-                  text={content.text}
-                  moveContent={moveContent}
-                />
+                <File key={content.id} id={content.id} text={content.text} />
               );
             }
-            return null;
+            return <Dir key={content.id} id={content.id} text={content.text} />;
           })}
         </ul>
       </li>

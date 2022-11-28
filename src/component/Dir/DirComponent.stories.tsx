@@ -1,6 +1,5 @@
 import { DataContextWrapper } from '@/DataContext';
 import { dir1Id } from '@/DataMock';
-import { moveContent } from '@/util';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -24,5 +23,4 @@ export const Default = Template.bind({});
 Default.args = {
   id: dir1Id,
   text: 'dir1',
-  moveContent: moveContent,
 };
