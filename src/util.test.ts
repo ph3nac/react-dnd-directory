@@ -1,6 +1,6 @@
-import { OrderedFileData } from './util';
 import { dir1Id, dir2Id, file1Id, file2Id, file3Id, file4Id } from './DataMock';
 import { DataType } from './@types/contentType';
+import { OrderedFileData } from './utils/OrderedFileData';
 
 describe('OrderedFileData', () => {
   const testMock: DataType = {

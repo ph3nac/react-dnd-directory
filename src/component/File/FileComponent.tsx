@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /** @jsxImportSource @emotion/react */
 import { DataContext } from '@/DataContext';
-import { isAncestor, OrderedFileData } from '@/util';
+import { IsAncestor } from '@/utils/IsAncestor';
+import { OrderedFileData } from '@/utils/OrderedFileData';
 import { FC, useContext, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { liStyle } from '../../style';
@@ -20,7 +21,7 @@ export const File: FC<FileProps> = ({ id, text }) => {
     drop: (item) => {
       const draggingId = item.id;
       const droppingId = id;
-      if (isAncestor(draggingId, droppingId, data)) return;
+      if (IsAncestor(draggingId, droppingId, data)) return;
       if (draggingId === droppingId) return;
       const orderedFileData = OrderedFileData(data, droppingId, draggingId);
       setData({ ...orderedFileData });
