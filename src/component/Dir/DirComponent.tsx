@@ -2,11 +2,10 @@
 import { FC, useContext, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { css } from '@emotion/react';
-import { isAncestor } from '@/util';
+import { isAncestor, OrderedDirContents, OrderedDirData } from '@/util';
 import { liStyle, ulStyle } from '../../style';
 import { DataContext } from '../../DataContext';
 import { File } from '../File/FileComponent';
-import { DirContents } from './DirContents';
 
 type DirProps = {
   id: string;
@@ -23,9 +22,12 @@ export const Dir: FC<DirProps> = ({ id, text }) => {
       const droppingId = id;
       if (draggingId === droppingId) return;
       if (isAncestor(draggingId, droppingId, data)) return;
-      data[draggingId].parentId = droppingId;
-      // TODO: Sort by index
-      setData({ ...data });
+
+      // data[draggingId].parentId = droppingId;
+
+      // TODO: Sort by index at Drop
+      const orderedDirData = OrderedDirData(data, droppingId, draggingId);
+      setData({ ...orderedDirData });
       console.log(`dropped into dir id:${id}`);
     },
   });
@@ -35,7 +37,7 @@ export const Dir: FC<DirProps> = ({ id, text }) => {
   });
   drag(drop(ref));
 
-  const orderedDirContents = DirContents(data, id);
+  const orderedDirContents = OrderedDirContents(data, id);
   return (
     <div>
       <div

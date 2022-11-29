@@ -3,6 +3,8 @@ import { DataType } from './@types/contentType';
 
 export const file1Id = cuid();
 export const file2Id = cuid();
+export const file3Id = cuid();
+export const file4Id = cuid();
 export const dir1Id = cuid();
 export const dir2Id = cuid();
 
@@ -34,5 +36,12 @@ export const DataMock: DataType = {
     parentId: dir1Id,
     text: 'dir2',
     index: 1,
+  },
+  [file3Id]: {
+    id: file3Id,
+    type: 'file',
+    parentId: undefined,
+    text: 'file3',
+    index: 2,
   },
 };
