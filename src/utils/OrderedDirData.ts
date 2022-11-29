@@ -2,41 +2,35 @@
 // OrderedDirData
 // ------------------------------------------------------------
 
-import { ContentType, DataType } from '@/@types/contentType';
-import { SorByIndex } from './SortByIndex';
+import { DataType } from '@/@types/contentType';
+import { ContentsIdArray } from './ContentsIdArray';
+import { ReOrderByArrayIndex } from './ReOrderByArrayIndex';
 
 export const OrderedDirData = (
   data: DataType,
   droppingId: string,
   draggingId: string,
 ): DataType => {
-  const droppingParentId = data[droppingId].parentId;
+  const draggingParentId = data[draggingId].parentId;
+  const droppingDirIdArray: string[] = ContentsIdArray(data, droppingId);
 
-  const sameDirContents: ContentType[] = [];
+  const draggingIndex = data[draggingId].index;
+  let retData: DataType = JSON.parse(JSON.stringify(data)) as DataType;
 
-  Object.keys(data).forEach((key, i) => {
-    const content = data[key];
-    if (content.parentId === droppingParentId) {
-      sameDirContents.push(content);
-    }
-  });
+  if (draggingParentId === droppingId) {
+    droppingDirIdArray.splice(draggingIndex, 1);
+    droppingDirIdArray.splice(0, 0, draggingId);
+  } else if (draggingParentId !== droppingId) {
+    const draggingParentIdArray = ContentsIdArray(data, draggingParentId);
+    draggingParentIdArray.splice(draggingIndex, 1);
+    droppingDirIdArray.splice(0, 0, draggingId);
 
-  sameDirContents.sort(SorByIndex);
+    retData = ReOrderByArrayIndex(data, draggingParentIdArray);
 
-  const contentsIdArray: string[] = [];
+    retData[draggingId].parentId = droppingId;
+  }
 
-  sameDirContents.forEach((content) => {
-    contentsIdArray.push(content.id);
-  });
-
-  contentsIdArray.splice(0, 0, draggingId);
-
-  const retData = data;
-  contentsIdArray.forEach((contentId, i) => {
-    retData[contentId].index = i;
-  });
-
-  retData[draggingId].parentId = droppingId;
+  retData = ReOrderByArrayIndex(retData, droppingDirIdArray);
 
   return retData;
 };
