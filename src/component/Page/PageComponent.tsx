@@ -3,6 +3,8 @@ import { css } from '@emotion/react';
 import { DataContext } from '@/DataContext';
 import { useContext, useRef } from 'react';
 import { useDrop } from 'react-dnd';
+import { OrderedDirData } from '@/utils/OrderedDirData';
+import { OrderedDirContents } from '@/utils/OrderedDirContents';
 import { Dir } from '../Dir/DirComponent';
 import { File } from '../File/FileComponent';
 
@@ -11,15 +13,17 @@ export const Page = () => {
   const [data, setData] = useContext(DataContext);
   const [, drop] = useDrop<{ id: string }, unknown, unknown>({
     accept: ['File', 'Dir'],
+    // TODO: re-order dragging parent and add top
     drop: (item) => {
       const draggingId = item.id;
-      if (draggingId === undefined) return;
-      data[draggingId].parentId = undefined;
-      setData({ ...data });
+      const droppingId = undefined;
+      const orderedPageData = OrderedDirData(data, droppingId, draggingId);
+      setData({ ...orderedPageData });
       console.log('dropped into page');
     },
   });
   drop(ref);
+  const orderedPageContents = OrderedDirContents(data, undefined);
   return (
     <div>
       <div
@@ -36,26 +40,14 @@ export const Page = () => {
           margin: 0;
         `}
       >
-        {data
-          ? Object.keys(data).map((key) => {
-              const content = data[key];
-              if (content.parentId === undefined) {
-                if (content.type === 'file') {
-                  return (
-                    <File
-                      key={content.id}
-                      id={content.id}
-                      text={content.text}
-                    />
-                  );
-                }
-                return (
-                  <Dir key={content.id} id={content.id} text={content.text} />
-                );
-              }
-              return null;
-            })
-          : null}
+        {orderedPageContents.map((content) => {
+          if (content.type === 'file') {
+            return (
+              <File key={content.id} id={content.id} text={content.text} />
+            );
+          }
+          return <Dir key={content.id} id={content.id} text={content.text} />;
+        })}
       </ul>
     </div>
   );

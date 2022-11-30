@@ -5,7 +5,10 @@
 import { ContentType, DataType } from '@/@types/contentType';
 import { SorByIndex } from './SortByIndex';
 
-export const OrderedDirContents = (data: DataType, currentId: string) => {
+export const OrderedDirContents = (
+  data: DataType,
+  currentId: string | undefined,
+) => {
   const dirContents: ContentType[] = [];
   Object.keys(data).forEach((key, i) => {
     const content = data[key];

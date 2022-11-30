@@ -8,7 +8,7 @@ import { ReOrderByArrayIndex } from './ReOrderByArrayIndex';
 
 export const OrderedDirData = (
   data: DataType,
-  droppingId: string,
+  droppingId: string | undefined,
   draggingId: string,
 ): DataType => {
   const draggingParentId = data[draggingId].parentId;

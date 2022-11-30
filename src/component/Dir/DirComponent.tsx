@@ -24,10 +24,6 @@ export const Dir: FC<DirProps> = ({ id, text }) => {
       const droppingId = id;
       if (draggingId === droppingId) return;
       if (IsAncestor(draggingId, droppingId, data)) return;
-
-      // data[draggingId].parentId = droppingId;
-
-      // TODO: Sort by index at Drop
       const orderedDirData = OrderedDirData(data, droppingId, draggingId);
       setData({ ...orderedDirData });
       console.log(`dropped into dir id:${id}`);
@@ -41,7 +37,7 @@ export const Dir: FC<DirProps> = ({ id, text }) => {
 
   const orderedDirContents = OrderedDirContents(data, id);
   return (
-    <div>
+    <li css={liStyle} key={id}>
       <div
         ref={ref}
         css={css`
@@ -51,18 +47,16 @@ export const Dir: FC<DirProps> = ({ id, text }) => {
       >
         {text}
       </div>
-      <li css={liStyle} key={id}>
-        <ul css={ulStyle}>
-          {orderedDirContents.map((content) => {
-            if (content.type === 'file') {
-              return (
-                <File key={content.id} id={content.id} text={content.text} />
-              );
-            }
-            return <Dir key={content.id} id={content.id} text={content.text} />;
-          })}
-        </ul>
-      </li>
-    </div>
+      <ul css={ulStyle}>
+        {orderedDirContents.map((content) => {
+          if (content.type === 'file') {
+            return (
+              <File key={content.id} id={content.id} text={content.text} />
+            );
+          }
+          return <Dir key={content.id} id={content.id} text={content.text} />;
+        })}
+      </ul>
+    </li>
   );
 };
